@@ -1,8 +1,10 @@
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import Link from "next/link";
-import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
+import { Button } from "@/components/ui/button";
+import "./globals.css";
 
 const notoSansJp = Noto_Sans_JP({
 	subsets: ["latin"],
@@ -37,17 +39,32 @@ export default function RootLayout({
 			<body className={`${notoSansJp.variable} font-sans antialiased`}>
 				<ConvexClientProvider>
 					<div className="mx-auto min-h-screen max-w-6xl px-4 py-6">
-						<header className="mb-8 flex items-center justify-between">
-							<Link href="/" className="text-lg font-bold">
-								AI採用トレンドJP
-							</Link>
-							<nav className="flex gap-4 text-sm text-muted-foreground">
-								<Link href="/dashboard">ダッシュボード</Link>
-								<Link href="/companies">企業別</Link>
-								<Link href="/roles">職種別</Link>
-							</nav>
+						<header className="mb-8 flex items-center justify-between gap-4">
+							<div className="flex items-center gap-6">
+								<Link href="/" className="text-lg font-bold">
+									AI採用トレンドJP
+								</Link>
+								<nav className="flex gap-4 text-sm text-muted-foreground">
+									<Link href="/dashboard">ダッシュボード</Link>
+									<Link href="/companies">企業別</Link>
+									<Link href="/roles">職種別</Link>
+								</nav>
+							</div>
+
+							<div className="flex items-center gap-3">
+								<SignedOut>
+									<SignInButton>
+										<Button size="sm">ログイン</Button>
+									</SignInButton>
+								</SignedOut>
+								<SignedIn>
+									<UserButton afterSignOutUrl="/" />
+								</SignedIn>
+							</div>
 						</header>
+
 						<main>{children}</main>
+
 						<footer className="mt-12 border-t pt-6 text-sm text-muted-foreground">
 							<div className="flex flex-wrap gap-4">
 								{footerLinks.map(([label, href]) => (
