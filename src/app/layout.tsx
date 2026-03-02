@@ -1,4 +1,10 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import Link from "next/link";
@@ -37,8 +43,9 @@ export default function RootLayout({
 	return (
 		<html lang="ja">
 			<body className={`${notoSansJp.variable} font-sans antialiased`}>
-				<ConvexClientProvider>
-					<div className="mx-auto min-h-screen max-w-6xl px-4 py-6">
+				<ClerkProvider>
+					<ConvexClientProvider>
+						<div className="mx-auto min-h-screen max-w-6xl px-4 py-6">
 						<header className="mb-8 flex items-center justify-between gap-4">
 							<div className="flex items-center gap-6">
 								<Link href="/" className="text-lg font-bold">
@@ -74,8 +81,9 @@ export default function RootLayout({
 								))}
 							</div>
 						</footer>
-					</div>
-				</ConvexClientProvider>
+						</div>
+					</ConvexClientProvider>
+				</ClerkProvider>
 			</body>
 		</html>
 	);
